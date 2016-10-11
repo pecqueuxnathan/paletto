@@ -5,16 +5,6 @@ var PalettoTestCase = TestCase("PalettoTestCase");
 var engine = new Engine();
 
 PalettoTestCase.prototype.testStory1 = function () {
-    /*  var paletto =
-     [["black", "green", "white", "blue", "red","white" ]]
-     [["yellow", "white", "green", "red", "yellow", "blue"]]
-     [["blue", "yellow", "blue", "white", "black", "red"]]
-     [["red", "black", "red", "green", "blue", "white"]]
-     [["white", "green", "yellow", "black", "yellow", "green"]]
-     [["yellow", "blue","black", "red", "green", "black"]];
-
-     */
-
     var paletto = engine.initPaletto();
 
     assertTrue(paletto[0][0] == "black");
@@ -26,4 +16,8 @@ PalettoTestCase.prototype.testStory1 = function () {
     assertTrue(paletto[4].equals(["white", "green", "yellow", "black", "yellow", "green"]));
     assertTrue(paletto[5].equals(["yellow", "blue","black", "red", "green", "black"]));
 
+};
+
+PalettoTestCase.prototype.testStory2 = function () {
+    assertTrue(engine.chooseColor("yellow"));
 };
