@@ -3,11 +3,12 @@
 var Engine = function () {
 
 // private attributes and methods
+    var paletto;
 
 // public methods
 
     this.initPaletto = function() {
-        var paletto =
+        this.paletto =
             [
                 ["black", "green", "white", "blue", "red","white" ],
                 ["yellow", "white", "green", "red", "yellow", "blue"],
@@ -16,9 +17,24 @@ var Engine = function () {
                 ["white", "green", "yellow", "black", "yellow", "green"],
                 ["yellow", "blue","black", "red", "green", "black"]
                 ];
-        return paletto;
+        return this.paletto;
     }
 
+    this.chooseColor = function(color){
+        if(this.paletto[0][0] == color) {
+            return true;
+        }
+        if(this.paletto[0][5] == color) {
+            return true;
+        }
+        if(this.paletto[5][0] == color) {
+            return true;
+        }
+        if(this.paletto[5][5] == color) {
+            return true;
+        }
+        return false;
+    }
 
 
 
