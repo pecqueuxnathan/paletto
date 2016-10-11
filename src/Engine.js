@@ -4,7 +4,8 @@ var Engine = function () {
 
 // private attributes and methods
     var paletto;
-    var player1Pieces= [];
+    var player1Pieces = [];
+    var player2Pieces = [];
 
     function grantChooseColor(arrayPosition, player) {
         player1Pieces.push(arrayPosition);
@@ -12,50 +13,65 @@ var Engine = function () {
         return true;
     }
 
+    this.hasOnlyTwoNeighbors = function (line, column) {
+        var neighborCount = 0;
+        if (this.paletto[line + 1] != undefined && this.paletto[line + 1][column] != "") {
+            neighborCount++;
+        }
+        if (this.paletto[line -1] != undefined && this.paletto[line - 1][column] != "") {
+            neighborCount++;
+        }
+        if (this.paletto[line ][column-1] != undefined && this.paletto[line][column-1] != "") {
+            neighborCount++;
+        }
+        if (this.paletto[line][column +1] != undefined && this.paletto[line][column+1] != "") {
+            neighborCount++;
+        }
+
+        if (neighborCount == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 // public methods
 
-    this.initPaletto = function() {
+    this.initPaletto = function () {
         this.paletto =
             [
-                ["black", "green", "white", "blue", "red","white" ],
+                ["black", "green", "white", "blue", "red", "white"],
                 ["yellow", "white", "green", "red", "yellow", "blue"],
                 ["blue", "yellow", "blue", "white", "black", "red"],
                 ["red", "black", "red", "green", "blue", "white"],
                 ["white", "green", "yellow", "black", "yellow", "green"],
-                ["yellow", "blue","black", "red", "green", "black"]
-                ];
+                ["yellow", "blue", "black", "red", "green", "black"]
+            ];
         return this.paletto;
     }
 
-    this.chooseColor = function(color,player){
-        if(this.paletto[0][0] == color) {
-            player1Pieces.push(this.paletto[0][0]);
-            this.paletto[0][0] = "";
-        }
-        if(this.paletto[0][5] == color) {
-            player1Pieces.push(this.paletto[0][5]);
-            this.paletto[0][5] = "";
-            return true;
-        }
-        if(this.paletto[5][0] == color) {
-            player1Pieces.push(this.paletto[5][0]);
-            this.paletto[5][0] = "";
-            return true;
-        }
-        if(this.paletto[5][5] == color) {
-            player1Pieces.push(this.paletto[5][5]);
-            this.paletto[5][5] = "";
-            return true;
+    this.chooseColor = function (color, player) {
+        for (var line = 0; line < this.paletto.length; line++) {
+            for (var column = 0; column < this.paletto[line].length; column++) {
+                if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column)) {
+                    if (player == 1) {
+                        player1Pieces.push(this.paletto[line][column]);
+                    } else {
+                        player2Pieces.push(this.paletto[line][column]);
+                    }
+                    this.paletto[line][column] = "";
+                    return true;
+                }
+            }
         }
         return false;
     }
 
 
-
-    this.getPlatePiecesCount = function(){
+    this.getPlatePiecesCount = function () {
         var count = 0;
-        for (var i = 0 ; i < this.paletto.length ; i++){
-            for (var j = 0 ; j < this.paletto[i].length ; j++){
+        for (var i = 0; i < this.paletto.length; i++) {
+            for (var j = 0; j < this.paletto[i].length; j++) {
                 if (this.paletto[i][j] != "") {
                     count++;
                 }
@@ -64,24 +80,22 @@ var Engine = function () {
         return count;
     }
 
-    this.getPlayerPieces = function(player){
-        if (player){
+    this.getPlayerPieces = function (player) {
+        if (player == 1) {
             return player1Pieces;
+        } else{
+            return player2Pieces;
         }
     }
 
 
-
-
     /*
-        DO NOT TOUCH THIS FUCKING CODE BUDDY !!! Thanks =)
+     DO NOT TOUCH THIS FUCKING CODE BUDDY !!! Thanks =)
      */
 
 
-
-
     // Warn if overriding existing method
-    if(Array.prototype.equals)
+    if (Array.prototype.equals)
         console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
 // attach the .equals method to Array's prototype to call it on any array
     Array.prototype.equals = function (array) {
@@ -93,7 +107,7 @@ var Engine = function () {
         if (this.length != array.length)
             return false;
 
-        for (var i = 0, l=this.length; i < l; i++) {
+        for (var i = 0, l = this.length; i < l; i++) {
             // Check if we have nested arrays
             if (this[i] instanceof Array && array[i] instanceof Array) {
                 // recurse into the nested arrays

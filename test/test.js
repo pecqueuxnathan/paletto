@@ -19,12 +19,22 @@ PalettoTestCase.prototype.testStory1 = function () {
 };
 
 PalettoTestCase.prototype.testStory2 = function () {
-    assertTrue(engine.chooseColor("yellow"));
+    assertTrue(engine.chooseColor("yellow", 1));
 };
 
 PalettoTestCase.prototype.testStory3 = function () {
     var piecesArray = engine.getPlayerPieces(1);
     assertTrue(engine.getPlatePiecesCount() == 35);
+    console.log(piecesArray.length);
     assertTrue(piecesArray.length == 1);
     assertTrue(piecesArray[0] == "yellow");
+};
+
+PalettoTestCase.prototype.testStory4 = function () {
+    var paletto = engine.getPaletto();
+    var piecesArray = engine.getPlayerPieces(2);
+    assertTrue(paletto[0][0] == "");
+    assertTrue(paletto[5][5] == "");
+    assertTrue(piecesArray[0] == "black");
+    assertTrue(piecesArray[1] == "black");
 };
