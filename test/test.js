@@ -21,3 +21,10 @@ PalettoTestCase.prototype.testStory1 = function () {
 PalettoTestCase.prototype.testStory2 = function () {
     assertTrue(engine.chooseColor("yellow"));
 };
+
+PalettoTestCase.prototype.testStory3 = function () {
+    var piecesArray = engine.getPlayer1Pieces();
+    assertTrue(engine.getPiecesCount() == 35);
+    assertTrue(piecesArray.size == 1);
+    assertTrue(piecesArray[0] == "yellow");
+};

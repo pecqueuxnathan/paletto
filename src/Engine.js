@@ -22,15 +22,19 @@ var Engine = function () {
 
     this.chooseColor = function(color){
         if(this.paletto[0][0] == color) {
+            this.paletto[0][0] = "";
             return true;
         }
         if(this.paletto[0][5] == color) {
+            this.paletto[0][5] = "";
             return true;
         }
         if(this.paletto[5][0] == color) {
+            this.paletto[5][0] = "";
             return true;
         }
         if(this.paletto[5][5] == color) {
+            this.paletto[5][5] = "";
             return true;
         }
         return false;
