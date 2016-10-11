@@ -28,6 +28,8 @@ var Engine = function () {
             neighborCount++;
         }
 
+       // console.log(neighborCount);
+
         if (neighborCount == 2) {
             return true;
         } else {
@@ -51,6 +53,8 @@ var Engine = function () {
     }
 
     this.chooseColor = function (color, player) {
+        //console.log(color);
+        var succeed = false;
         for (var line = 0; line < this.paletto.length; line++) {
             for (var column = 0; column < this.paletto[line].length; column++) {
                 if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column)) {
@@ -60,11 +64,11 @@ var Engine = function () {
                         player2Pieces.push(this.paletto[line][column]);
                     }
                     this.paletto[line][column] = "";
-                    return true;
+                    succeed = true;
                 }
             }
         }
-        return false;
+        return succeed;
     }
 
 
@@ -86,6 +90,10 @@ var Engine = function () {
         } else{
             return player2Pieces;
         }
+    }
+
+    this.getPaletto = function () {
+        return this.paletto;
     }
 
 
