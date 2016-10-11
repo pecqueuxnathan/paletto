@@ -23,8 +23,8 @@ PalettoTestCase.prototype.testStory2 = function () {
 };
 
 PalettoTestCase.prototype.testStory3 = function () {
-    var piecesArray = engine.getPlayer1Pieces();
-    assertTrue(engine.getPiecesCount() == 35);
-    assertTrue(piecesArray.size == 1);
+    var piecesArray = engine.getPlayerPieces(1);
+    assertTrue(engine.getPlatePiecesCount() == 35);
+    assertTrue(piecesArray.length == 1);
     assertTrue(piecesArray[0] == "yellow");
 };

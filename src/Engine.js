@@ -4,6 +4,13 @@ var Engine = function () {
 
 // private attributes and methods
     var paletto;
+    var player1Pieces= [];
+
+    function grantChooseColor(arrayPosition, player) {
+        player1Pieces.push(arrayPosition);
+        arrayPosition = "";
+        return true;
+    }
 
 // public methods
 
@@ -20,20 +27,23 @@ var Engine = function () {
         return this.paletto;
     }
 
-    this.chooseColor = function(color){
+    this.chooseColor = function(color,player){
         if(this.paletto[0][0] == color) {
+            player1Pieces.push(this.paletto[0][0]);
             this.paletto[0][0] = "";
-            return true;
         }
         if(this.paletto[0][5] == color) {
+            player1Pieces.push(this.paletto[0][5]);
             this.paletto[0][5] = "";
             return true;
         }
         if(this.paletto[5][0] == color) {
+            player1Pieces.push(this.paletto[5][0]);
             this.paletto[5][0] = "";
             return true;
         }
         if(this.paletto[5][5] == color) {
+            player1Pieces.push(this.paletto[5][5]);
             this.paletto[5][5] = "";
             return true;
         }
@@ -41,6 +51,24 @@ var Engine = function () {
     }
 
 
+
+    this.getPlatePiecesCount = function(){
+        var count = 0;
+        for (var i = 0 ; i < this.paletto.length ; i++){
+            for (var j = 0 ; j < this.paletto[i].length ; j++){
+                if (this.paletto[i][j] != "") {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    this.getPlayerPieces = function(player){
+        if (player){
+            return player1Pieces;
+        }
+    }
 
 
 
