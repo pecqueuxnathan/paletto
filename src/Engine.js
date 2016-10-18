@@ -7,28 +7,112 @@ var Engine = function () {
     var player1Pieces = [];
     var player2Pieces = [];
 
-    function grantChooseColor(arrayPosition, player) {
-        player1Pieces.push(arrayPosition);
-        arrayPosition = "";
-        return true;
+    this.grantChooseColor = function (line, column) {
+        var positionsString = this.getNeighborsPositions(line, column);
+        var tempColor = this.paletto[line][column];
+
+        this.paletto[line][column] = "";
+
+
+        if (positionsString != false) {
+
+
+            var neighbors = [];
+            var neighborsNeighborhood = [];
+
+
+            var positionsArray = positionsString.split("$");
+
+            for (var i = 0; i < positionsArray.length; i++) {
+                neighbors.push(positionsArray[i]);
+                //console.log(positionsArray[i]);
+            }
+
+            for (var i = 0; i < neighbors.length; i++) {
+                var nN = this.getNeighborsPositions(parseInt(neighbors[i].split(",")[0]), parseInt(neighbors[i].split(",")[1])).split("$");
+                for (var j = 0; j < nN.length; j++) {
+                    neighborsNeighborhood.push(nN[j]);
+                   // console.log(nN[j]);
+                }
+            }
+
+            var granted = false;
+
+            for (var i = 0; i < neighborsNeighborhood.length; i++) {
+                for (var j = 0; j < neighborsNeighborhood.length; j++) {
+                    if (i != j && neighborsNeighborhood[i] == neighborsNeighborhood[j]) {
+                        granted = true;
+                    }
+                }
+            }
+        }
+
+        this.paletto[line][column] = tempColor;
+
+        return granted;
+    }
+
+    this.getNeighborsPositions = function (line, column) {
+        var neighborCount = 0;
+        var neighborsPosition = "";
+
+        if (this.paletto[line + 1] != undefined && this.paletto[line + 1][column] != "") {
+            neighborCount++;
+            if (neighborsPosition == "") {
+                neighborsPosition += (line + 1) + "," + column;
+            } else {
+                neighborsPosition += "$" + (line + 1) + "," + column;
+            }
+        }
+        if (this.paletto[line - 1] != undefined && this.paletto[line - 1][column] != "") {
+            neighborCount++;
+            if (neighborsPosition == "") {
+                neighborsPosition += (line - 1) + "," + column;
+            } else {
+                neighborsPosition += "$" + (line - 1) + "," + column;
+            }
+        }
+        if (this.paletto[line][column - 1] != undefined && this.paletto[line][column - 1] != "") {
+            neighborCount++;
+            if (neighborsPosition == "") {
+                neighborsPosition += line + "," + (column - 1);
+            } else {
+                neighborsPosition += "$" + line + "," + (column - 1);
+            }
+        }
+
+        if (this.paletto[line][column + 1] != undefined && this.paletto[line][column + 1] != "") {
+
+            neighborCount++;
+            if (neighborsPosition == "") {
+                neighborsPosition += line + "," + (column + 1);
+            } else {
+                neighborsPosition += "$" + line + "," + (column + 1);
+            }
+
+        }
+
+        return neighborsPosition;
+
     }
 
     this.hasOnlyTwoNeighbors = function (line, column) {
         var neighborCount = 0;
+
         if (this.paletto[line + 1] != undefined && this.paletto[line + 1][column] != "") {
             neighborCount++;
         }
-        if (this.paletto[line -1] != undefined && this.paletto[line - 1][column] != "") {
+        if (this.paletto[line - 1] != undefined && this.paletto[line - 1][column] != "") {
             neighborCount++;
         }
-        if (this.paletto[line ][column-1] != undefined && this.paletto[line][column-1] != "") {
+        if (this.paletto[line][column - 1] != undefined && this.paletto[line][column - 1] != "") {
             neighborCount++;
         }
-        if (this.paletto[line][column +1] != undefined && this.paletto[line][column+1] != "") {
+        if (this.paletto[line][column + 1] != undefined && this.paletto[line][column + 1] != "") {
             neighborCount++;
         }
 
-       // console.log(neighborCount);
+        // console.log(neighborCount);
 
         if (neighborCount == 2) {
             return true;
@@ -52,25 +136,25 @@ var Engine = function () {
         return this.paletto;
     }
 
-    // this.initStory5 = function () {
-    //     this.paletto =
-    //         [
-    //             ["", "", "white", "blue", "red", "white"],
-    //             ["yellow", "white", "green", "red", "yellow", "blue"],
-    //             ["blue", "yellow", "blue", "white", "black", "red"],
-    //             ["red", "black", "red", "green", "blue", "white"],
-    //             ["white", "green", "yellow", "black", "yellow", "green"],
-    //             ["yellow", "blue", "black", "red", "green", "black"]
-    //         ];
-    //     return this.paletto;
-    // }
+    this.initStory5 = function () {
+        this.paletto =
+            [
+                ["", "", "", "blue", "red", "white"],
+                ["", "", "", "red", "yellow", ""],
+                ["", "", "blue", "white", "black", ""],
+                ["red", "black", "red", "", "", ""],
+                ["", "green", "yellow", "", "", ""],
+                ["", "", "black", "", "", ""]
+            ];
+        return this.paletto;
+    }
 
     this.chooseColor = function (color, player) {
         //console.log(color);
         var succeed = false;
         for (var line = 0; line < this.paletto.length; line++) {
             for (var column = 0; column < this.paletto[line].length; column++) {
-                if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column)) {
+                if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column) && this.grantChooseColor(line, column)) {
                     if (player == 1) {
                         player1Pieces.push(this.paletto[line][column]);
                     } else {
@@ -100,7 +184,7 @@ var Engine = function () {
     this.getPlayerPieces = function (player) {
         if (player == 1) {
             return player1Pieces;
-        } else{
+        } else {
             return player2Pieces;
         }
     }
