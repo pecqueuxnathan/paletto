@@ -38,3 +38,13 @@ PalettoTestCase.prototype.testStory4 = function () {
     assertTrue(piecesArray[0] == "black");
     assertTrue(piecesArray[1] == "black");
 };
+
+PalettoTestCase.prototype.testStory5 = function () {
+    var paletto = engine.initStory5();
+
+    engine.chooseColor("blue", 1);
+
+    assertTrue(paletto[0][3] == "");
+    assertTrue(paletto[2][2] == "blue");
+
+};

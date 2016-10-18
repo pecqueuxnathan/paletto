@@ -52,6 +52,19 @@ var Engine = function () {
         return this.paletto;
     }
 
+    // this.initStory5 = function () {
+    //     this.paletto =
+    //         [
+    //             ["", "", "white", "blue", "red", "white"],
+    //             ["yellow", "white", "green", "red", "yellow", "blue"],
+    //             ["blue", "yellow", "blue", "white", "black", "red"],
+    //             ["red", "black", "red", "green", "blue", "white"],
+    //             ["white", "green", "yellow", "black", "yellow", "green"],
+    //             ["yellow", "blue", "black", "red", "green", "black"]
+    //         ];
+    //     return this.paletto;
+    // }
+
     this.chooseColor = function (color, player) {
         //console.log(color);
         var succeed = false;
