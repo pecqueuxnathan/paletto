@@ -46,5 +46,20 @@ PalettoTestCase.prototype.testStory5 = function () {
 
     assertTrue(paletto[0][3] == "");
     assertTrue(paletto[2][2] == "blue");
+};
 
+PalettoTestCase.prototype.testStory6 = function () {
+    var paletto = engine.initPaletto();
+
+    engine.chooseColor("black", 1);
+    engine.chooseColor("green", 2);
+    engine.chooseColor("yellow", 1);
+    engine.chooseColor("blue", 2);
+    engine.chooseColor("white", 1);
+    engine.chooseColor("red", 2);
+    engine.chooseColor("blue", 1);
+    engine.chooseColor("yellow", 2);
+    engine.chooseColor("black", 1);
+
+    assertTrue(win() == 1);
 };
