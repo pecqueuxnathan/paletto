@@ -50,16 +50,26 @@ PalettoTestCase.prototype.testStory5 = function () {
 
 PalettoTestCase.prototype.testStory6 = function () {
     var paletto = engine.initPaletto();
-
-    engine.chooseColor("black", 1);
-    engine.chooseColor("green", 2);
-    engine.chooseColor("yellow", 1);
-    engine.chooseColor("blue", 2);
-    engine.chooseColor("white", 1);
-    engine.chooseColor("red", 2);
-    engine.chooseColor("blue", 1);
-    engine.chooseColor("yellow", 2);
-    engine.chooseColor("black", 1);
+    console.log(engine.getPaletto());
+    engine.chooseColor2("black", 1,["A1","F6"]);
+    engine.printPaletto();
+    engine.chooseColor2("green", 2,["B1","E6","F5"]);
+    engine.printPaletto();
+    engine.chooseColor2("yellow", 1,["A2","A6"]);
+    engine.printPaletto();
+    engine.chooseColor2("blue", 2,["A3"]);
+    engine.printPaletto();
+    engine.chooseColor2("white", 1,["A5","F4","F1","C1"]);
+    engine.printPaletto();
+    engine.chooseColor2("red", 2,["E1","F3","D6","A4"]);
+    engine.printPaletto();
+    engine.chooseColor2("blue", 1,["D3","F2","B6"]);
+    engine.printPaletto();
+    engine.chooseColor2("yellow", 2,["B3","E2","E5"]);
+    engine.printPaletto();
+    engine.chooseColor2("black", 1,["B4","C6","D5","E3"]);
+    engine.printPaletto();
+    console.log(engine.getPaletto());
 
     assertTrue(win() == 1);
 };

@@ -32,7 +32,7 @@ var Engine = function () {
                 var nN = this.getNeighborsPositions(parseInt(neighbors[i].split(",")[0]), parseInt(neighbors[i].split(",")[1])).split("$");
                 for (var j = 0; j < nN.length; j++) {
                     neighborsNeighborhood.push(nN[j]);
-                   // console.log(nN[j]);
+                    // console.log(nN[j]);
                 }
             }
 
@@ -150,19 +150,43 @@ var Engine = function () {
     }
 
     this.chooseColor = function (color, player) {
-        //console.log(color);
+        console.log(color);
         var succeed = false;
         for (var line = 0; line < this.paletto.length; line++) {
             for (var column = 0; column < this.paletto[line].length; column++) {
                 if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column) && this.grantChooseColor(line, column)) {
                     if (player == 1) {
                         player1Pieces.push(this.paletto[line][column]);
+                        this.printSuppress(column, line);
                     } else {
                         player2Pieces.push(this.paletto[line][column]);
+                        this.printSuppress(column, line);
                     }
                     this.paletto[line][column] = "";
                     succeed = true;
                 }
+            }
+        }
+        return succeed;
+    }
+
+
+    this.chooseColor2 = function (color, player, positionArray) {
+        for (var i = 0; i < positionArray.length; i++) {
+            var column = positionArray[i].charCodeAt(0) - 65;
+            var line = positionArray[i].charCodeAt(1) - 49;
+            console.log(color);
+            var succeed = false;
+            if (this.paletto[line][column] == color && this.hasOnlyTwoNeighbors(line, column) && this.grantChooseColor(line, column)) {
+                if (player == 1) {
+                    player1Pieces.push(this.paletto[line][column]);
+                    this.printSuppress(column, line);
+                } else {
+                    player2Pieces.push(this.paletto[line][column]);
+                    this.printSuppress(column, line);
+                }
+                this.paletto[line][column] = "";
+                succeed = true;
             }
         }
         return succeed;
@@ -191,6 +215,38 @@ var Engine = function () {
 
     this.getPaletto = function () {
         return this.paletto;
+    }
+
+    this.printSuppress = function (column, line) {
+        var columnPrintable = "";
+        switch (column) {
+            case 0:
+                columnPrintable = "A";
+                break;
+            case 1:
+                columnPrintable = "B";
+                break;
+            case 2:
+                columnPrintable = "C";
+                break;
+            case 3:
+                columnPrintable = "D";
+                break;
+            case 4:
+                columnPrintable = "E";
+                break;
+            case 5:
+                columnPrintable = "F";
+                break;
+        }
+        console.log("Supprimé : " + columnPrintable + (line + 1));
+    }
+
+    this.printPaletto = function () {
+        console.log("------------");
+        for (var line = 0; line < 6; line++)
+            console.log(this.paletto[line][0] + " ; " + this.paletto[line][1] + " ; " + this.paletto[line][2] + " ; " + this.paletto[line][3] + " ; " + this.paletto[line][4] + " ; " + this.paletto[line][5]);
+        console.log("------------");
     }
 
 
